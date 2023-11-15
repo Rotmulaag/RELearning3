@@ -13,6 +13,9 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addNote(note: NoteEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addNote(note: List<NoteEntity>)
+
     @Delete
     suspend fun deleteNote(note: NoteEntity)
 
