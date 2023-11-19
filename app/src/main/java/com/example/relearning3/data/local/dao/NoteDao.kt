@@ -30,6 +30,6 @@ interface NoteDao {
         LOWER(title) LIKE "%" || LOWER(:query) || "%" AND
         LOWER(primaryTags) LIKE "%" || LOWER(:query) || "%" AND
         LOWER(secondaryTags) LIKE "%" || LOWER(:query) || "%" 
-    """) //should return results from every WHERE (but it probs doesn't)
+    """) //should return results from every WHERE (but it probs doesn't; replace w JOIN)
     suspend fun searchNotes(query: String): List<NoteEntity> //Title, pTag, sTag
 }
