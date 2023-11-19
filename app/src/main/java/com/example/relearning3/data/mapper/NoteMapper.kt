@@ -3,23 +3,24 @@ package com.example.relearning3.data.mapper
 import com.example.relearning3.data.local.entity.NoteEntity
 import com.example.relearning3.domain.model.Note
 
-fun toList(string: String): List<String> {
+fun String.toList(): List<String> {
     val list = emptyList<String>().toMutableList()
     var word = ""
 
-    for (c in string)
+    var prev = ' '
+    for (c in this) {
+        if (c == '[' || c == ']' || c == ' ' && prev == ','/* || c == ',' && prev == ' '*/) continue
         if (c != ',')
-            word.plus(c)
+            word += c
         else {
             list.add(word)
             word = ""
         }
+        prev = c
+    }
+    list.add(word)
 
     return list
-}
-
-fun fromList(list: List<String>): String {
-    return list.toString()
 }
 
 fun NoteEntity.toNote(): Note {
@@ -28,8 +29,8 @@ fun NoteEntity.toNote(): Note {
         title = title,
         body = body,
         date = date,
-        primaryTags = toList(primaryTags),
-        secondaryTags = toList(secondaryTags)
+        primaryTags = primaryTags.toList(),
+        secondaryTags = secondaryTags.toList()
     )
 }
 
@@ -39,7 +40,7 @@ fun Note.toNoteEntity(): NoteEntity {
         title = title,
         body = body,
         date = date,
-        primaryTags = fromList(primaryTags),
-        secondaryTags = fromList(secondaryTags)
+        primaryTags = primaryTags.toString(),
+        secondaryTags = secondaryTags.toString()
     )
 }

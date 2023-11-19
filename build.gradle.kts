@@ -2,8 +2,8 @@
 plugins {
     //Android indicators (idk about library, maybe it can be excluded, maybe try at the end of the project
     //I think it's just for making libraries
-    id("com.android.application") version "8.1.3" apply false
-    id("com.android.library") version "8.1.3" apply false
+    id("com.android.application") version "8.1.4" apply false
+    id("com.android.library") version "8.1.4" apply false
 
     //Kotlin and KSP compiler
     /*
