@@ -12,5 +12,6 @@ interface NotesRepository {
 
     suspend fun getNote(id: Int): Flow<Resource<Note>>
     suspend fun getNotes(query: String): Flow<Resource<List<Note>>>
+    //suspend fun searchNotes(query: String): Flow<Resource<List<Note>>>
 
 }
