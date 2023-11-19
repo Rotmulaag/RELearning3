@@ -1,5 +1,6 @@
 package com.example.relearning3.data.repository
 
+import com.example.relearning3.data.local.NotesDatabase
 import com.example.relearning3.data.local.dao.NoteDao
 import com.example.relearning3.data.mapper.toNote
 import com.example.relearning3.data.mapper.toNoteEntity
@@ -12,7 +13,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NoteRepositoryImpl @Inject constructor(private val dao: NoteDao): NotesRepository {
+class NoteRepositoryImpl @Inject constructor(private val db: NotesDatabase): NotesRepository {
+
+    private val dao = db.dao
 
     override suspend fun addNote(note: Note) = dao.addNote(note.toNoteEntity())
 
