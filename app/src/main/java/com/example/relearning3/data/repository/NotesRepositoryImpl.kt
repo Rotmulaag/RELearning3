@@ -1,7 +1,6 @@
 package com.example.relearning3.data.repository
 
 import com.example.relearning3.data.local.NotesDatabase
-import com.example.relearning3.data.local.dao.NoteDao
 import com.example.relearning3.data.mapper.toNote
 import com.example.relearning3.data.mapper.toNoteEntity
 import com.example.relearning3.domain.model.Note
@@ -13,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NoteRepositoryImpl @Inject constructor(private val db: NotesDatabase): NotesRepository {
+class NotesRepositoryImpl @Inject constructor(private val db: NotesDatabase): NotesRepository {
 
     private val dao = db.dao
 
