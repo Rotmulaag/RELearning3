@@ -1,11 +1,13 @@
 package com.example.relearning3.presentation.home_screen.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -22,18 +24,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.relearning3.presentation.destinations.UniqueNoteDestination
+import com.example.relearning3.presentation.home_screen.HomeScreenViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
-@Preview
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Destination
 @RootNavGraph(start = true)
 fun HomeScreen(
-    /*destination: DestinationsNavigator,
-    viewModel: HomeScreenViewModel = hiltViewModel()*/) {
+    destination: DestinationsNavigator,
+    viewModel: HomeScreenViewModel = hiltViewModel()) {
+
+    val state = viewModel.state
 
     MaterialTheme() {
         Scaffold(
@@ -41,7 +49,7 @@ fun HomeScreen(
                 ExtendedFloatingActionButton(
                     text = { Text(text = "Add") },
                     icon = { Icon(Icons.Filled.Add, contentDescription = "Add") },
-                    onClick = { /*TODO*/ },
+                    onClick = { destination.navigate(UniqueNoteDestination(-1)) },
                     expanded = true)
             }
         ) {it ->
@@ -58,8 +66,8 @@ fun HomeScreen(
                         .padding(10.dp)
                 ) {
                     TextField(
-                        value = "",
-                        onValueChange = {  },
+                        value = state.query,
+                        onValueChange = { viewModel.onSeachQueryChange(it) },
                         leadingIcon = {
                             Icon(
                                 Icons.Filled.Search,
@@ -72,9 +80,16 @@ fun HomeScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
-                Row {
-                    Text(text = "abc")
-                    Text(text = "abccd")
+                LazyColumn() {
+                    items(5) {
+                        val note = state.notes[it]
+                        HomeScreenListItem(
+                            note = note,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { destination.navigate(UniqueNoteDestination(note.id!!)) }
+                                .background(MaterialTheme.colorScheme.primaryContainer))
+                    }
                 }
 
             }

@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.relearning3.data.mapper.toList
 import com.example.relearning3.domain.model.Note
 import com.example.relearning3.domain.repository.NotesRepository
 import com.example.relearning3.util.Resource
@@ -27,16 +28,46 @@ class UniqueNoteViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val id = savedStateHandle.get<Int>("id") ?: return@launch
-            notesRepository.getNote(id).collect() {
-                when(it) {
-                    is Resource.Success -> { state = state.copy(note = it.data) }
-                    is Resource.Error -> {
-                        it.message?.let { message ->
-                            Toast.makeText(app, message, Toast.LENGTH_LONG).show()
+            if (id > -1)
+                notesRepository.getNote(id).collect() {
+                    when (it) {
+                        is Resource.Success -> {
+                            state = state.copy(note = it.data!!)
+                        }
+
+                        is Resource.Error -> {
+                            it.message?.let { message ->
+                                Toast.makeText(app, message, Toast.LENGTH_LONG).show()
+                            }
+                        }
+
+                        is Resource.Loading -> {
+                            state = state.copy(isLoading = it.isLoading)
                         }
                     }
-                    is Resource.Loading -> { state = state.copy(isLoading = it.isLoading)}
                 }
+            else
+                state = state.copy(isLoading = false)
+        }
+    }
+
+    fun onNoteChange(event: UniqueScreenEvent) {
+        val currentNote = state.note
+        state = when(event) {
+            is UniqueScreenEvent.Title -> {
+                state.copy(note = currentNote.copy(title = event.data))
+            }
+
+            is UniqueScreenEvent.Body -> {
+                state.copy(note = currentNote.copy(body = event.data))
+            }
+
+            is UniqueScreenEvent.pTag -> {
+                state.copy(note = currentNote.copy(primaryTags = event.data.toList()))
+            }
+
+            is UniqueScreenEvent.sTag -> {
+                state.copy(note = currentNote.copy(secondaryTags = event.data.toList()))
             }
         }
     }

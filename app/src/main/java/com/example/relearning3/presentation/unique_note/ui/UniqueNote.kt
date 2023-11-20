@@ -36,16 +36,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.relearning3.domain.model.Note
 import com.example.relearning3.presentation.unique_note.UniqueNoteViewModel
+import com.example.relearning3.presentation.unique_note.UniqueScreenEvent
 import com.ramcosta.composedestinations.annotation.Destination
 
-@Preview
+
 @Composable
 @Destination
 fun UniqueNote(
-    id: Int = 0,
-    /*viewModel: UniqueNoteViewModel = hiltViewModel()*/
+    id: Int,
+    viewModel: UniqueNoteViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state
 
     MaterialTheme {
         Column(
@@ -76,16 +79,16 @@ fun UniqueNote(
                     Spacer(modifier = Modifier.height(5.dp))
 
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = { },
+                        value = state.note.title,
+                        onValueChange = { viewModel.onNoteChange(UniqueScreenEvent.Title(it)) },
                         label = { Text(text = "Title")},
                         modifier = Modifier.fillMaxWidth())
 
                     Spacer(modifier = Modifier.height(5.dp))
 
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = { },
+                        value = state.note.body,
+                        onValueChange = { viewModel.onNoteChange(UniqueScreenEvent.Body(it)) },
                         label = { Text(text = "Body")},
                         modifier = Modifier.fillMaxWidth())
 
@@ -115,8 +118,8 @@ fun UniqueNote(
                     }
 
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = { },
+                        value = state.note.primaryTags.toString(),
+                        onValueChange = { viewModel.onNoteChange(UniqueScreenEvent.pTag(it)) },
                         label = { Text(text = "Path")},
                         modifier = Modifier.fillMaxWidth())
 
@@ -135,8 +138,8 @@ fun UniqueNote(
                     }
 
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = { },
+                        value = state.note.secondaryTags.toString(),
+                        onValueChange = { viewModel.onNoteChange(UniqueScreenEvent.sTag(it)) },
                         label = { Text(text = "List")},
                         modifier = Modifier.fillMaxWidth())
 
@@ -155,7 +158,7 @@ fun UniqueNote(
                         ExtendedFloatingActionButton(
                             text = { Text(text = "Delete") },
                             icon = { Icon(Icons.Outlined.Delete,"Delete") },
-                            onClick = {  },
+                            onClick = { viewModel.deleteNote() },
                             modifier = Modifier.weight(40f),
                             expanded = true)
 
@@ -164,7 +167,7 @@ fun UniqueNote(
                         ExtendedFloatingActionButton(
                             text = { Text(text = "Save") },
                             icon = { Icon(Icons.Outlined.Done,"Done") },
-                            onClick = {  },
+                            onClick = { viewModel.saveNote() },
                             modifier = Modifier.weight(40f),
                             expanded = true)
 
@@ -176,7 +179,7 @@ fun UniqueNote(
                     ExtendedFloatingActionButton(
                         text = { Text(text = "Save") },
                         icon = { Icon(Icons.Outlined.Done,"Done") },
-                        onClick = {  },
+                        onClick = { viewModel.saveNote() },
                         modifier = Modifier.weight(15f),
                         expanded = true)
 

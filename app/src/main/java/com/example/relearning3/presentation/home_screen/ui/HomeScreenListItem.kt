@@ -32,17 +32,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.relearning3.domain.model.Note
 import kotlin.jvm.internal.Intrinsics
 
-@Preview
+
 @Composable
-fun HomeScreenListItem() {
+fun HomeScreenListItem(note: Note, modifier: Modifier) {
 
     Card(
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primaryContainer)
+        modifier = modifier
     ) {
         Column(
             modifier = Modifier.padding(15.dp)
@@ -70,7 +69,7 @@ fun HomeScreenListItem() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "pTags",
+                        text = note.primaryTags.toString(),
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                         color = MaterialTheme.colorScheme.secondary,
@@ -80,7 +79,7 @@ fun HomeScreenListItem() {
                             .fillMaxWidth() //testing
                     )
                     Text(
-                        text = "sTags",
+                        text = note.secondaryTags.toString(),
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                         color = MaterialTheme.colorScheme.secondary,
@@ -90,7 +89,7 @@ fun HomeScreenListItem() {
                     )
                 }
             }
-            Text(text = "Title",
+            Text(text = note.title,
                 fontSize = 25.sp,
                 /*typography = MaterialTheme.typography.titleLarge,*/
                 overflow = TextOverflow.Ellipsis,
@@ -100,7 +99,7 @@ fun HomeScreenListItem() {
                 /*modifier = Modifier.weight(.25f)*/)
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = "Body",
+                text = note.body,
                 fontSize = 18.sp,
                 /*typography = MaterialTheme.typography.titleLarge,*/
                 overflow = TextOverflow.Ellipsis,
