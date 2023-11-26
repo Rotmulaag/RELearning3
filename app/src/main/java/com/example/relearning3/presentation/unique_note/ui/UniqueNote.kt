@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.BubbleChart
@@ -26,29 +25,37 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.relearning3.domain.model.Note
+import com.example.relearning3.presentation.destinations.HomeScreenDestination
 import com.example.relearning3.presentation.unique_note.UniqueNoteViewModel
 import com.example.relearning3.presentation.unique_note.UniqueScreenEvent
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 @Composable
 @Destination
 fun UniqueNote(
     id: Int,
+    destination: DestinationsNavigator,
     viewModel: UniqueNoteViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
+    val click = { destination.navigate(HomeScreenDestination) }
 
     MaterialTheme {
         Column(
@@ -72,6 +79,7 @@ fun UniqueNote(
                         Text(
                             text = "Basics",
                             fontSize = 25.sp,
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(start = 10.dp)
                         )
                     }
@@ -112,6 +120,7 @@ fun UniqueNote(
                         Text(
                             text = "Location",
                             fontSize = 25.sp,
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(start = 10.dp)
                         )
 
@@ -121,6 +130,15 @@ fun UniqueNote(
                         value = state.note.primaryTags.toString(),
                         onValueChange = { viewModel.onNoteChange(UniqueScreenEvent.pTag(it)) },
                         label = { Text(text = "Path")},
+                        /*colors = TextFieldDefaults.DecorationBox(
+                            value = ,
+                            innerTextField = { /*TODO*/ },
+                            enabled = ,
+                            singleLine = ,
+                            visualTransformation = 
+                        ) {
+                            
+                        },*/
                         modifier = Modifier.fillMaxWidth())
 
                     Divider(Modifier.padding(vertical = 8.dp))
@@ -133,6 +151,7 @@ fun UniqueNote(
                         Text(
                             text = "Tags",
                             fontSize = 25.sp,
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(start = 10.dp)
                         )
                     }
@@ -158,7 +177,7 @@ fun UniqueNote(
                         ExtendedFloatingActionButton(
                             text = { Text(text = "Delete") },
                             icon = { Icon(Icons.Outlined.Delete,"Delete") },
-                            onClick = { viewModel.deleteNote() },
+                            onClick = { viewModel.deleteNote(); click() },
                             modifier = Modifier.weight(40f),
                             expanded = true)
 
@@ -167,7 +186,7 @@ fun UniqueNote(
                         ExtendedFloatingActionButton(
                             text = { Text(text = "Save") },
                             icon = { Icon(Icons.Outlined.Done,"Done") },
-                            onClick = { viewModel.saveNote() },
+                            onClick = { viewModel.saveNote(); click() },
                             modifier = Modifier.weight(40f),
                             expanded = true)
 
@@ -179,7 +198,7 @@ fun UniqueNote(
                     ExtendedFloatingActionButton(
                         text = { Text(text = "Save") },
                         icon = { Icon(Icons.Outlined.Done,"Done") },
-                        onClick = { viewModel.saveNote() },
+                        onClick = { viewModel.saveNote(); click() },
                         modifier = Modifier.weight(15f),
                         expanded = true)
 

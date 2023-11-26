@@ -40,20 +40,22 @@ import kotlin.jvm.internal.Intrinsics
 fun HomeScreenListItem(note: Note, modifier: Modifier) {
 
     Card(
-        shape = RoundedCornerShape(8.dp),
-        modifier = modifier
+        modifier = modifier,
+        shape = RoundedCornerShape(8.dp)
     ) {
         Column(
-            modifier = Modifier.padding(15.dp)
+            modifier = Modifier
+                .padding(15.dp)
                 .fillMaxWidth()
         ) {
             Row(
-                modifier = Modifier.height(IntrinsicSize.Min)
+                modifier = Modifier
+                    .height(IntrinsicSize.Min)
                     .fillMaxWidth()
             ) {
                 Card(
-                    /*shape = RoundedCornerShape(8.dp),*/
-                    modifier = Modifier.background(Color.Yellow)
+                    //shape = RoundedCornerShape(8.dp),
+                    //modifier = Modifier.background(Color.Yellow)
                 ) {
                     Text(
                         text = "#",
@@ -88,7 +90,12 @@ fun HomeScreenListItem(note: Note, modifier: Modifier) {
                             .padding(horizontal = 5.dp)
                     )
                 }
+
             }
+            Divider(color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.padding(3.dp).height(0.25.dp)
+
+            )
             Text(text = note.title,
                 fontSize = 25.sp,
                 /*typography = MaterialTheme.typography.titleLarge,*/

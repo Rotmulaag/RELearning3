@@ -52,12 +52,12 @@ fun HomeScreen(
                     onClick = { destination.navigate(UniqueNoteDestination(-1)) },
                     expanded = true)
             }
-        ) {it ->
+        ) { it ->
             Column (
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it)
-                    .background(MaterialTheme.colorScheme.background)
+                    //.background(MaterialTheme.colorScheme.background)
             ) {
                 Card (
                     shape = RoundedCornerShape(50),
@@ -81,14 +81,16 @@ fun HomeScreen(
                     )
                 }
                 LazyColumn() {
-                    items(5) {
+                    items(state.notes.size) {
                         val note = state.notes[it]
                         HomeScreenListItem(
                             note = note,
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .padding(8.dp)
                                 .clickable { destination.navigate(UniqueNoteDestination(note.id!!)) }
-                                .background(MaterialTheme.colorScheme.primaryContainer))
+                                //.background(MaterialTheme.colorScheme.primaryContainer)
+                        )
                     }
                 }
 

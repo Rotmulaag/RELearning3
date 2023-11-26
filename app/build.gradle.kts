@@ -12,10 +12,10 @@ android {
 
     defaultConfig {
         applicationId = "com.example.relearning3"
-        minSdk = 34
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.9-beta"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -56,7 +56,8 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.activity:activity-compose:1.8.1")
+    implementation("androidx.work:work-runtime-ktx:2.9.0-rc01")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -76,26 +77,25 @@ dependencies {
     //Compose extras
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.activity:activity-compose:1.8.0")
     implementation("com.google.accompanist:accompanist-swiperefresh:0.28.0")
-
+/*
     //Ktor for internet and maybe okhttp but all maybe doesn't work with moshi, idk
-    implementation("io.ktor:ktor-client-core:2.3.5")
+    implementation("io.ktor:ktor-client-core:2.3.6")
     //internet engine
-    implementation("io.ktor:ktor-client-okhttp:2.3.5")
+    implementation("io.ktor:ktor-client-okhttp:2.3.6")
     //long ass serialization, idk why so many (ig this replaces moshi?)
-    implementation("io.ktor:ktor-client-serialization:2.3.5")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
+    implementation("io.ktor:ktor-client-serialization:2.3.6")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.6")
     //logging
-    implementation("io.ktor:ktor-client-logging:2.3.5")
-
+    implementation("io.ktor:ktor-client-logging:2.3.6")
+*/
     //Compose new destinations
-    implementation("io.github.raamcosta.compose-destinations:core:1.9.54")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.54")
-
+    implementation("io.github.raamcosta.compose-destinations:core:1.9.55")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.55")
+/*
     //Moshi
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
-
+*/
     //Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
     ksp("com.google.dagger:hilt-android-compiler:2.48.1")

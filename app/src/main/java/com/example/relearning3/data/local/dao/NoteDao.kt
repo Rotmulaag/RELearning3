@@ -25,11 +25,15 @@ interface NoteDao {
     @Query("SELECT * FROM Notes WHERE id = :id")
     suspend fun getNote(id: Int): NoteEntity
 
-    @Query("""
+    /*@Query("""
         SELECT * FROM Notes WHERE
         LOWER(title) LIKE "%" || LOWER(:query) || "%" AND
         LOWER(primaryTags) LIKE "%" || LOWER(:query) || "%" AND
         LOWER(secondaryTags) LIKE "%" || LOWER(:query) || "%" 
-    """) //should return results from every WHERE (but it probs doesn't; replace w JOIN)
+    """) //should return results from every WHERE (but it probs doesn't; replace w JOIN)*/
+    @Query("""
+        SELECT * FROM Notes WHERE
+        LOWER(title) LIKE "%" || LOWER(:query) || "%"
+    """)
     suspend fun searchNotes(query: String): List<NoteEntity> //Title, pTag, sTag
 }
